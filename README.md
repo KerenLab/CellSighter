@@ -12,7 +12,7 @@ The Data should have the following structure:
   * Each image should be saved in a format of npz or tif file as a 3D image shaped: HxWxC, C is the number of proteins in the data
 
 * The segmentation should be in: {data_path}/CellTypes/cells 
-  * For each image there should be a segmentation in a format of npz or tif file, shaped HxW. The segmentation file is a labeled object matrix whereby all pixels belonging to a cell will have the value of their cell id. The cells should be numbered from 1 to number of cells in the image.
+  * For each image there should be a segmentation file in a format of npz or tif file, shaped HxW. The segmentation file is a labeled object matrix whereby all pixels belonging to a cell will have the value of their cell id. The cells should be numbered from 1 to number of cells in the image.
 
 * The labels should be in: {data_path}/CellTypes/cells2labels 
   * For each image there should be a file in a format of npz (*.npz), such that each row has the label of the cell id as the index of the row. 
