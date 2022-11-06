@@ -152,7 +152,7 @@ def load_crops(root_dir,
         val_crops - list of crops from the validation set
     """
     cell_types_dir = Path(root_dir) / "CellTypes"
-    data_dir = cell_types_dir / "data" / "antibodies"
+    data_dir = cell_types_dir / "data" / "images"
     cells_dir = cell_types_dir / "cells"
     cells2labels_dir = cell_types_dir / "cells2labels"
 

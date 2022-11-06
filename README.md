@@ -7,7 +7,7 @@ CellSighter is an ensemble of convolutional neural networks to perform supervise
 
 ## Data Preparation
 The Data should have the following structure:
-* The raw images should be in: {data_path}/CellTypes/data/antibodies
+* The raw images should be in: {data_path}/CellTypes/data/images
 
   * Each image should be saved in a format of npz or tif file as a 3D image shaped: HxWxC, C is the number of proteins in the data
 
@@ -16,7 +16,7 @@ The Data should have the following structure:
 
 * The labels should be in: {data_path}/CellTypes/cells2labels 
   * For each image there should be a file in a format of npz (*.npz), such that each row has the label of the cell id as the index of the row. 
-  * Another option is to save it as a txt format (*.txt) where each line is separated by \n. Such that each row has the label of the cell id as the index of the row.
+  * Another option is to save it as a txt format (*.txt) where each line is separated by \n. Such that the index of each row matches the cell id
   * Note that for cells without labels (eg test), you should set the label to -1, but all cells should appear in the file.
 
 * Channels file, a txt file with the names of proteins ordered according to the order of the proteins in the image file.
@@ -94,7 +94,7 @@ You will need to fill in the path to the csv results file. The script will gener
     "num_classes": 20,  #Number of classes in the data set  
     "epoch_max": 50, #Number of epochs to train  
     "lr": 0.001, # learning rate value  
-    "blacklist": [],  #channels to not use in the training/validation at all
+    "blacklist": [],  #channels to not use in the training/validation at all  
     "channels_path": "",  #Path to the protein list that you created during data preparation  
     "weight_to_eval": "",  #Path to weights, relevant only for evaluation  
     "sample_batch": true, #Whether to sample equally from the category in each batch during training   
