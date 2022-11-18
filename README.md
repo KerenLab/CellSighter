@@ -1,5 +1,5 @@
 
-# CellSigther
+# CellSighter
 <img src="./CellSighterLogo.jpg" style="width: 15%; height: 15%">
 
 
@@ -23,7 +23,7 @@ The Data should have the following structure:
 the names of the proteins should be separated by \n.
 
 ### Notes:
-
+- In the folder "example_experiment" you can find a small example of the data preparation and configuration file for the network.
 - The names of the files should be the image id
 
 - The labels of the cells should be integer numbers.
@@ -85,8 +85,8 @@ image_id - image_id
 You will need to fill in the path to the csv results file. The script will generate a confusion matrix and save it as a png file.
 
 ## Preparing configuration file
-> {   
-    "crop_input_size": 60  #size of crop that goes into the network. Make sure that it is sufficient to visualize a cell and a fraction of its immediate neighbors.   
+The configuration file should be named 'config.json' and should have the following fields:
+>   "crop_input_size": 60,  #size of crop that goes into the network. Make sure that it is sufficient to visualize a cell and a fraction of its immediate neighbors.   
     "crop_size": 128,  #size of initial crop before augmentations. This should be ~2-fold the size of the input crop to allow augmentations such as shifts and rotations.  
     "root_dir": "data_path",  #path to the data that you've prepared in previous steps  
     "train_set": ["FOV1", "FOV2", ...],  #List of image ids to use as training set  
@@ -100,5 +100,4 @@ You will need to fill in the path to the csv results file. The script will gener
     "sample_batch": true, #Whether to sample equally from the category in each batch during training   
     "hierarchy_match": {"0": "B cell", "1": "Myeloid",...}  #Dictionary of matching classes to higher category for balancing higher categories during training. The keys should be the label ids and the values the higher categories.   
     "size_data": 1000, #Optional, for each cell type sample size_data samples or less if there aren't enough cells from the cell type  
-    "aug": true #Optional, whether to apply augmentations or not  
-}
+    "aug": true #Optional, whether to apply augmentations or not
