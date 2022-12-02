@@ -44,7 +44,7 @@ def load_data(fname) -> np.ndarray:
     return image
 
 
-def load_image(image_path, cells_path, cells2labels_path, channels=[]):
+def load_image(image_path, cells_path, cells2labels_path, channels=[], to_pad=False, crop_size=0):
     image = load_data(image_path)
     if len(channels) > 0:
         image = image[..., channels]
@@ -54,6 +54,9 @@ def load_image(image_path, cells_path, cells2labels_path, channels=[]):
     elif cells2labels_path.endswith(".txt"):
         with open(cells2labels_path, "r") as f:
             cells2labels = np.array(f.read().strip().split('\n')).astype(float).astype(int)
+    if to_pad:
+        image = np.pad(image, ((crop_size // 2, crop_size // 2), (crop_size // 2, crop_size // 2), (0, 0)), 'constant')
+        cells = np.pad(cells, ((crop_size // 2, crop_size // 2), (crop_size // 2, crop_size // 2)), 'constant')
     return image, cells, cells2labels
 
 
@@ -86,7 +89,7 @@ def create_slices(slices, crop_size, bounds):
     return tuple(all_dim_slices)
 
 
-def load_samples(images_dir, cells_dir, cells2labels_dir, images_names, crop_size, channels=None):
+def load_samples(images_dir, cells_dir, cells2labels_dir, images_names, crop_size, to_pad=False, channels=None):
     """
 
     Args:
@@ -113,7 +116,9 @@ def load_samples(images_dir, cells_dir, cells2labels_dir, images_names, crop_siz
         image, cells, cl2lbl = load_image(image_path=image_path[0],
                                           cells_path=cells_path[0],
                                           cells2labels_path=cells2labels_path[0],
-                                          channels=channels)
+                                          channels=channels,
+                                          to_pad=to_pad,
+                                          crop_size=crop_size)
 
         objs = ndimage.find_objects(cells)
         for cell_id, obj in enumerate(objs, 1):
@@ -137,6 +142,7 @@ def load_crops(root_dir,
                crop_size,
                train_set,
                val_set,
+               to_pad=False,
                blacklist_channels=[]):
     """
     Given paths to the data, generate crops for all the cells in the data
@@ -146,6 +152,7 @@ def load_crops(root_dir,
         crop_size: size of the environment to keep for each cell
         train_set: name of images to train on
         val_set: name of images to validate on
+        to_pad: whether to pad the image with zeros in order to work on cell on the border
         blacklist_channels: channels to not use in the training/validation
     Returns:
         train_crops - list of crops from the train set
@@ -162,12 +169,12 @@ def load_crops(root_dir,
     print(channels)
     print('Load training data...')
     train_crops = load_samples(images_dir=data_dir, cells_dir=cells_dir, cells2labels_dir=cells2labels_dir,
-                               images_names=train_set, crop_size=crop_size,
+                               images_names=train_set, crop_size=crop_size, to_pad=to_pad,
                                channels=channels)
 
     print('Load validation data...')
     val_crops = load_samples(images_dir=data_dir, cells_dir=cells_dir, cells2labels_dir=cells2labels_dir,
-                             images_names=val_set, crop_size=crop_size,
+                             images_names=val_set, crop_size=crop_size, to_pad=to_pad,
                              channels=channels)
 
     return train_crops, val_crops

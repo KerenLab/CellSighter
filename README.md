@@ -94,6 +94,7 @@ The configuration file should be named 'config.json' and should have the followi
     "num_classes": 20,  #Number of classes in the data set  
     "epoch_max": 50, #Number of epochs to train  
     "lr": 0.001, # learning rate value  
+    "to_pad": false, #Whether to work on the border of the image or not  
     "blacklist": [],  #channels to not use in the training/validation at all  
     "channels_path": "",  #Path to the protein list that you created during data preparation  
     "weight_to_eval": "",  #Path to weights, relevant only for evaluation  

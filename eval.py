@@ -54,6 +54,7 @@ if __name__ == "__main__":
                             config["crop_size"],
                             config["train_set"],
                             config["val_set"],
+                            config["to_pad"],
                             blacklist_channels=config["blacklist"])
     crop_input_size = config["crop_input_size"] if "crop_input_size" in config else 100
     val_dataset = CellCropsDataset(val_crops, transform=val_transform(crop_input_size), mask=True)

@@ -88,6 +88,7 @@ if __name__ == "__main__":
                                         config["crop_size"],
                                         config["train_set"],
                                         config["val_set"],
+                                        config["to_pad"],
                                         blacklist_channels=config["blacklist"])
 
     train_crops = np.array([c for c in train_crops if c._label >= 0])
