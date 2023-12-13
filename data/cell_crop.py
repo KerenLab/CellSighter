@@ -21,7 +21,7 @@ class CellCrop:
                   'slice_y_start': self._slices[1].start,
                   'slice_x_end': self._slices[0].stop,
                   'slice_y_end': self._slices[1].stop,
-                  'label': self._label.astype(np.long)}
+                  'label': self._label.astype(np.longlong)}
         if mask:
             result['mask'] = (self._cells[self._slices] == self._cell_id).astype(np.float32)
             result['all_cells_mask'] = (self._cells[self._slices] > 0).astype(np.float32)

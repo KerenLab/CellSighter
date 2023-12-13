@@ -113,14 +113,14 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(model.parameters(), lr=config["lr"])
     scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.85)
 
-    train_loader = DataLoader(train_dataset, batch_size=128,
-                              num_workers=8,
+    train_loader = DataLoader(train_dataset, batch_size=config["batch_size"],
+                              num_workers=config["num_workers"],
                               sampler=sampler if config["sample_batch"] else None,
                               shuffle=False if config["sample_batch"] else True)
-    train_loader_for_eval = DataLoader(train_dataset_for_eval, batch_size=128,
-                                       num_workers=8, shuffle=False)
-    val_loader = DataLoader(val_dataset, batch_size=128,
-                            num_workers=10, shuffle=False)
+    train_loader_for_eval = DataLoader(train_dataset_for_eval, batch_size=config["batch_size"],
+                                       num_workers=config["num_workers"], shuffle=False)
+    val_loader = DataLoader(val_dataset, batch_size=config["batch_size"],
+                            num_workers=config["num_workers"], shuffle=False)
     print(len(train_loader), len(val_loader))
     for i in range(config["epoch_max"]):
         train_epoch(model, train_loader, optimizer, criterion, device=device, epoch=i, writer=writer)
