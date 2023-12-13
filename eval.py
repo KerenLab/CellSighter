@@ -67,8 +67,8 @@ if __name__ == "__main__":
     model.load_state_dict(torch.load(eval_weights))
     model = model.to(device=device)
 
-    val_loader = DataLoader(val_dataset, batch_size=128,
-                            num_workers=10, shuffle=False, pin_memory=True)
+    val_loader = DataLoader(val_dataset, batch_size=config["batch_size"],
+                            num_workers=config["num_workers"], shuffle=False, pin_memory=True)
     cells, results = val_epoch(model, val_loader, device=device)
 
     metrics = Metrics(
